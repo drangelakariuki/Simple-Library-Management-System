@@ -10,14 +10,13 @@ def return_book():
     cur = conn.cursor()
     with conn:
         # fetch copies in system
-        cur.execute("Select distinct copies from book_details where book_id = '978-1-5098-0033-9' ")
+        cur.execute(("Select distinct copies from book_details where book_id = '%s' " % book_id))
         available_copies = int(cur.fetchone()[0])
         # increase number of copies in the system
         updated_copies = available_copies + loaned
         updated_copies1 = str(updated_copies)
         # return query
-        return_query = "UPDATE book_details set copies = %s where book_id =  '978-1-5098-0033-9' "
-        cur.execute(return_query, updated_copies1)
+        cur.execute("UPDATE book_details set copies = %s where book_id = '%s' " % (updated_copies1, book_id))
         conn.commit()
         print(cur.rowcount)
     if cur.rowcount > 0:
