@@ -48,6 +48,8 @@ def add_book():
                                                 conn.commit()
                                                 print("New book has been added")
                                                 return
+                                            cur.close
+                                            conn.close
 
 
 if __name__ == '__main__':
